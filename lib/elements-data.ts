@@ -152,5 +152,6 @@ export function getRandomElement(elements: Element[]): Element | null {
   }
   
   const randomIndex = Math.floor(Math.random() * elements.length);
-  return elements[randomIndex];
+  const element = elements[randomIndex];
+  return element || null;
 }
