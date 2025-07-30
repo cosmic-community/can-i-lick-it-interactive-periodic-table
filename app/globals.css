@@ -45,7 +45,7 @@
   .element-tile {
     @apply relative flex flex-col items-center justify-center p-1 sm:p-2 rounded-lg border-2 border-gray-300 
            transition-all duration-200 cursor-pointer hover:scale-105 hover:shadow-lg;
-    min-height: 60px;
+    min-height: 50px;
     aspect-ratio: 1;
   }
 
@@ -59,23 +59,95 @@
 
   .periodic-grid {
     display: grid;
-    grid-template-columns: repeat(18, minmax(30px, 1fr));
-    gap: 2px;
+    grid-template-columns: repeat(18, minmax(25px, 1fr));
+    grid-template-rows: repeat(7, minmax(50px, auto));
+    gap: 1px;
     max-width: 100%;
     margin: 0 auto;
+    justify-items: stretch;
+    align-items: stretch;
+  }
+
+  .lanthanides-grid,
+  .actinides-grid {
+    display: grid;
+    grid-template-columns: repeat(15, minmax(25px, 1fr));
+    gap: 1px;
+    max-width: 100%;
+    margin: 0 auto;
+    justify-items: stretch;
+    align-items: stretch;
   }
 
   @media (min-width: 640px) {
     .periodic-grid {
-      gap: 4px;
+      gap: 2px;
+      grid-template-columns: repeat(18, minmax(35px, 1fr));
+      grid-template-rows: repeat(7, minmax(60px, auto));
+    }
+    
+    .lanthanides-grid,
+    .actinides-grid {
+      gap: 2px;
+      grid-template-columns: repeat(15, minmax(35px, 1fr));
+    }
+    
+    .element-tile {
+      min-height: 60px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .periodic-grid {
+      gap: 3px;
       grid-template-columns: repeat(18, minmax(40px, 1fr));
+      grid-template-rows: repeat(7, minmax(65px, auto));
+    }
+    
+    .lanthanides-grid,
+    .actinides-grid {
+      gap: 3px;
+      grid-template-columns: repeat(15, minmax(40px, 1fr));
+    }
+    
+    .element-tile {
+      min-height: 65px;
     }
   }
 
   @media (min-width: 1024px) {
     .periodic-grid {
-      gap: 6px;
+      gap: 4px;
       grid-template-columns: repeat(18, minmax(50px, 1fr));
+      grid-template-rows: repeat(7, minmax(70px, auto));
+    }
+    
+    .lanthanides-grid,
+    .actinides-grid {
+      gap: 4px;
+      grid-template-columns: repeat(15, minmax(50px, 1fr));
+    }
+    
+    .element-tile {
+      min-height: 70px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .periodic-grid {
+      gap: 6px;
+      grid-template-columns: repeat(18, minmax(60px, 1fr));
+      grid-template-rows: repeat(7, minmax(80px, auto));
+    }
+    
+    .lanthanides-grid,
+    .actinides-grid {
+      gap: 6px;
+      grid-template-columns: repeat(15, minmax(60px, 1fr));
+    }
+    
+    .element-tile {
+      min-height: 80px;
     }
   }
 }
@@ -109,4 +181,15 @@
 
 .element-highlighted {
   animation: highlight-pulse 2s ease-in-out 3;
+}
+
+/* Placeholder styling for lanthanides/actinides spots in main table */
+.element-tile.bg-gray-200 {
+  border-style: dashed;
+  cursor: default;
+}
+
+.element-tile.bg-gray-200:hover {
+  transform: none;
+  box-shadow: none;
 }

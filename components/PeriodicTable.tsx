@@ -42,13 +42,32 @@ export default function PeriodicTable({
     a.metadata.atomic_number - b.metadata.atomic_number
   );
 
+  // Separate main table elements from lanthanides and actinides
+  const mainTableElements = sortedElements.filter(element => {
+    const atomicNumber = element.metadata.atomic_number;
+    // Exclude lanthanides (57-71) and actinides (89-103) from main table
+    return !((atomicNumber >= 57 && atomicNumber <= 71) || (atomicNumber >= 89 && atomicNumber <= 103));
+  });
+
+  const lanthanides = sortedElements.filter(element => {
+    const atomicNumber = element.metadata.atomic_number;
+    return atomicNumber >= 57 && atomicNumber <= 71;
+  });
+
+  const actinides = sortedElements.filter(element => {
+    const atomicNumber = element.metadata.atomic_number;
+    return atomicNumber >= 89 && atomicNumber <= 103;
+  });
+
   return (
     <div className="relative w-full max-w-7xl mx-auto px-4">
+      {/* Main periodic table */}
       <div className="periodic-grid">
-        {sortedElements.map((element) => {
+        {mainTableElements.map((element) => {
           const position = getElementGridPosition(
             element.metadata.period, 
-            element.metadata.group
+            element.metadata.group,
+            element.metadata.atomic_number
           );
           
           return (
@@ -66,38 +85,73 @@ export default function PeriodicTable({
             />
           );
         })}
+
+        {/* Placeholders for lanthanides and actinides in main table */}
+        <div 
+          className="element-tile bg-gray-200 dark:bg-gray-700 border-dashed opacity-60"
+          style={{
+            gridColumn: 3,
+            gridRow: 6,
+          }}
+        >
+          <div className="text-xs text-gray-600 dark:text-gray-400 font-medium text-center">
+            57-71
+          </div>
+        </div>
+        
+        <div 
+          className="element-tile bg-gray-200 dark:bg-gray-700 border-dashed opacity-60"
+          style={{
+            gridColumn: 3,
+            gridRow: 7,
+          }}
+        >
+          <div className="text-xs text-gray-600 dark:text-gray-400 font-medium text-center">
+            89-103
+          </div>
+        </div>
       </div>
 
-      {/* Empty spaces for lanthanides and actinides labels */}
-      <div 
-        className="absolute text-xs text-gray-600 dark:text-gray-400 font-medium flex items-center justify-center"
-        style={{
-          gridColumn: 3,
-          gridRow: 6,
-          left: '11.1%',
-          top: '60%',
-        }}
-      >
-        La*
-      </div>
-      
-      <div 
-        className="absolute text-xs text-gray-600 dark:text-gray-400 font-medium flex items-center justify-center"
-        style={{
-          gridColumn: 3,
-          gridRow: 7,
-          left: '11.1%',
-          top: '70%',
-        }}
-      >
-        Ac**
-      </div>
+      {/* Lanthanides and Actinides series */}
+      <div className="mt-8">
+        <div className="text-sm text-gray-600 dark:text-gray-400 mb-2 text-center">
+          Lanthanides (La-Lu)
+        </div>
+        <div className="lanthanides-grid">
+          {lanthanides.map((element, index) => (
+            <ElementTile
+              key={element.id}
+              element={element}
+              onClick={handleElementClick}
+              onMouseEnter={handleElementHover}
+              onMouseLeave={handleElementLeave}
+              isHighlighted={highlightedElement === element.metadata.symbol}
+              style={{
+                gridColumn: index + 1,
+                gridRow: 1,
+              }}
+            />
+          ))}
+        </div>
 
-      {/* Lanthanides and Actinides series labels */}
-      <div className="mt-8 text-center">
-        <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-          <span className="mr-4">* Lanthanides</span>
-          <span>** Actinides</span>
+        <div className="text-sm text-gray-600 dark:text-gray-400 mb-2 mt-4 text-center">
+          Actinides (Ac-Lr)
+        </div>
+        <div className="actinides-grid">
+          {actinides.map((element, index) => (
+            <ElementTile
+              key={element.id}
+              element={element}
+              onClick={handleElementClick}
+              onMouseEnter={handleElementHover}
+              onMouseLeave={handleElementLeave}
+              isHighlighted={highlightedElement === element.metadata.symbol}
+              style={{
+                gridColumn: index + 1,
+                gridRow: 1,
+              }}
+            />
+          ))}
         </div>
       </div>
 

@@ -120,28 +120,68 @@ export function getSafetyColor(level: SafetyLevel): string {
 }
 
 // Helper function to calculate grid position
-export function getElementGridPosition(period: number, group: number): { gridColumn: number; gridRow: number } {
-  // Handle special cases for lanthanides and actinides
-  if (period === 6 && group === 3) {
-    // Lanthanides (La-Lu) - display in separate row
-    return { gridColumn: 4, gridRow: 9 };
-  }
-  if (period === 7 && group === 3) {
-    // Actinides (Ac-Lr) - display in separate row
-    return { gridColumn: 4, gridRow: 10 };
-  }
-
-  // Handle helium placement (period 1, group 18)
-  if (period === 1 && group === 18) {
-    return { gridColumn: 18, gridRow: 1 };
-  }
-
-  // Handle hydrogen placement (period 1, group 1)
-  if (period === 1 && group === 1) {
+export function getElementGridPosition(
+  period: number, 
+  group: number, 
+  atomicNumber?: number
+): { gridColumn: number; gridRow: number } {
+  // Special positioning for specific elements
+  
+  // Hydrogen (H) - atomic number 1
+  if (atomicNumber === 1) {
     return { gridColumn: 1, gridRow: 1 };
   }
-
-  // Standard placement
+  
+  // Helium (He) - atomic number 2
+  if (atomicNumber === 2) {
+    return { gridColumn: 18, gridRow: 1 };
+  }
+  
+  // Elements in periods 2-3: standard positioning
+  if (period === 2 || period === 3) {
+    // Period 2: Li-Ne (atomic numbers 3-10)
+    // Period 3: Na-Ar (atomic numbers 11-18)
+    if (atomicNumber && atomicNumber >= 3 && atomicNumber <= 10) {
+      // Period 2 elements
+      const positions = [
+        { col: 1, row: 2 }, // Li
+        { col: 2, row: 2 }, // Be
+        { col: 13, row: 2 }, // B
+        { col: 14, row: 2 }, // C
+        { col: 15, row: 2 }, // N
+        { col: 16, row: 2 }, // O
+        { col: 17, row: 2 }, // F
+        { col: 18, row: 2 }, // Ne
+      ];
+      const index = atomicNumber - 3;
+      return positions[index] || { gridColumn: group, gridRow: period };
+    }
+    
+    if (atomicNumber && atomicNumber >= 11 && atomicNumber <= 18) {
+      // Period 3 elements
+      const positions = [
+        { col: 1, row: 3 }, // Na
+        { col: 2, row: 3 }, // Mg
+        { col: 13, row: 3 }, // Al
+        { col: 14, row: 3 }, // Si
+        { col: 15, row: 3 }, // P
+        { col: 16, row: 3 }, // S
+        { col: 17, row: 3 }, // Cl
+        { col: 18, row: 3 }, // Ar
+      ];
+      const index = atomicNumber - 11;
+      return positions[index] || { gridColumn: group, gridRow: period };
+    }
+  }
+  
+  // Transition metals and other elements: use standard group positioning
+  // But skip lanthanides and actinides (they get special treatment)
+  if (atomicNumber && ((atomicNumber >= 57 && atomicNumber <= 71) || (atomicNumber >= 89 && atomicNumber <= 103))) {
+    // These will be handled separately in the component
+    return { gridColumn: 3, gridRow: period };
+  }
+  
+  // Standard positioning for most elements
   return { gridColumn: group, gridRow: period };
 }
 
