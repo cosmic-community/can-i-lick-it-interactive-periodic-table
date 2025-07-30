@@ -1,0 +1,156 @@
+import type { Element, SafetyLevel, SafetyLevelInfo } from '@/types';
+
+// Safety level information
+export const safetyLevels: Record<SafetyLevel, SafetyLevelInfo> = {
+  green: {
+    color: '#22c55e',
+    bgColor: 'bg-lick-safe',
+    label: 'Sure, it\'s probably fine',
+    description: 'These elements are generally safe to lick (though we still don\'t recommend it)',
+    emoji: '🟩'
+  },
+  yellow: {
+    color: '#eab308',
+    bgColor: 'bg-lick-caution',
+    label: 'Maybe not a good idea',
+    description: 'These elements might cause some unpleasant effects',
+    emoji: '🟨'
+  },
+  red: {
+    color: '#ef4444',
+    bgColor: 'bg-lick-danger',
+    label: 'You really shouldn\'t',
+    description: 'These elements are toxic and dangerous',
+    emoji: '🟥'
+  },
+  purple: {
+    color: '#a855f7',
+    bgColor: 'bg-lick-deadly',
+    label: 'Please reconsider',
+    description: 'These elements are extremely dangerous and often radioactive',
+    emoji: '🟪'
+  }
+};
+
+// Fallback element data if Cosmic is not available
+export const fallbackElements: Element[] = [
+  {
+    id: '1',
+    slug: 'h',
+    title: 'Hydrogen',
+    type: 'elements',
+    created_at: new Date().toISOString(),
+    modified_at: new Date().toISOString(),
+    metadata: {
+      symbol: 'H',
+      atomic_number: 1,
+      safety_level: 'green' as SafetyLevel,
+      lick_description: 'It\'s just gas! Though it might make you burp in a very high-pitched voice.',
+      element_group: 'Nonmetal',
+      period: 1,
+      group: 1,
+      element_name: 'Hydrogen'
+    }
+  },
+  {
+    id: '2',
+    slug: 'he',
+    title: 'Helium',
+    type: 'elements',
+    created_at: new Date().toISOString(),
+    modified_at: new Date().toISOString(),
+    metadata: {
+      symbol: 'He',
+      atomic_number: 2,
+      safety_level: 'green' as SafetyLevel,
+      lick_description: 'Totally inert! Though licking a gas is... challenging.',
+      element_group: 'Noble Gas',
+      period: 1,
+      group: 18,
+      element_name: 'Helium'
+    }
+  },
+  {
+    id: '3',
+    slug: 'li',
+    title: 'Lithium',
+    type: 'elements',
+    created_at: new Date().toISOString(),
+    modified_at: new Date().toISOString(),
+    metadata: {
+      symbol: 'Li',
+      atomic_number: 3,
+      safety_level: 'yellow' as SafetyLevel,
+      lick_description: 'Might stabilize your mood, but also might burn your tongue. Not worth it.',
+      element_group: 'Alkali Metal',
+      period: 2,
+      group: 1,
+      element_name: 'Lithium'
+    }
+  },
+  {
+    id: '4',
+    slug: 'be',
+    title: 'Beryllium',
+    type: 'elements',
+    created_at: new Date().toISOString(),
+    modified_at: new Date().toISOString(),
+    metadata: {
+      symbol: 'Be',
+      atomic_number: 4,
+      safety_level: 'red' as SafetyLevel,
+      lick_description: 'Extremely toxic! Your tongue would be the least of your worries.',
+      element_group: 'Alkaline Earth Metal',
+      period: 2,
+      group: 2,
+      element_name: 'Beryllium'
+    }
+  },
+  // Add more elements as needed for demonstration
+];
+
+// Helper function to get safety level info
+export function getSafetyLevelInfo(level: SafetyLevel): SafetyLevelInfo {
+  return safetyLevels[level];
+}
+
+// Helper function to get background color class
+export function getSafetyColor(level: SafetyLevel): string {
+  return safetyLevels[level].color;
+}
+
+// Helper function to calculate grid position
+export function getElementGridPosition(period: number, group: number): { gridColumn: number; gridRow: number } {
+  // Handle special cases for lanthanides and actinides
+  if (period === 6 && group === 3) {
+    // Lanthanides (La-Lu) - display in separate row
+    return { gridColumn: 4, gridRow: 9 };
+  }
+  if (period === 7 && group === 3) {
+    // Actinides (Ac-Lr) - display in separate row
+    return { gridColumn: 4, gridRow: 10 };
+  }
+
+  // Handle helium placement (period 1, group 18)
+  if (period === 1 && group === 18) {
+    return { gridColumn: 18, gridRow: 1 };
+  }
+
+  // Handle hydrogen placement (period 1, group 1)
+  if (period === 1 && group === 1) {
+    return { gridColumn: 1, gridRow: 1 };
+  }
+
+  // Standard placement
+  return { gridColumn: group, gridRow: period };
+}
+
+// Get random element for the random button feature
+export function getRandomElement(elements: Element[]): Element | null {
+  if (!elements || elements.length === 0) {
+    return null;
+  }
+  
+  const randomIndex = Math.floor(Math.random() * elements.length);
+  return elements[randomIndex];
+}

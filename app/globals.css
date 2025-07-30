@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --border: 214.3 31.8% 91.4%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --border: 217.2 32.6% 17.5%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .element-tile {
+    @apply relative flex flex-col items-center justify-center p-1 sm:p-2 rounded-lg border-2 border-gray-300 
+           transition-all duration-200 cursor-pointer hover:scale-105 hover:shadow-lg;
+    min-height: 60px;
+    aspect-ratio: 1;
+  }
+
+  .element-symbol {
+    @apply text-xs sm:text-sm md:text-base font-bold text-white;
+  }
+
+  .element-number {
+    @apply text-xs text-white opacity-80;
+  }
+
+  .periodic-grid {
+    display: grid;
+    grid-template-columns: repeat(18, minmax(30px, 1fr));
+    gap: 2px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 640px) {
+    .periodic-grid {
+      gap: 4px;
+      grid-template-columns: repeat(18, minmax(40px, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .periodic-grid {
+      gap: 6px;
+      grid-template-columns: repeat(18, minmax(50px, 1fr));
+    }
+  }
+}
+
+/* Tooltip styles */
+.tooltip {
+  @apply absolute z-50 px-3 py-2 text-sm bg-gray-900 text-white rounded-lg shadow-lg pointer-events-none
+         opacity-0 transition-opacity duration-200;
+  max-width: 250px;
+  word-wrap: break-word;
+}
+
+.tooltip.visible {
+  @apply opacity-100;
+}
+
+/* Dark mode adjustments */
+.dark .tooltip {
+  @apply bg-gray-100 text-gray-900;
+}
+
+/* Random element highlight animation */
+@keyframes highlight-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(59, 130, 246, 0);
+  }
+}
+
+.element-highlighted {
+  animation: highlight-pulse 2s ease-in-out 3;
+}
