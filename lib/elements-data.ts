@@ -144,14 +144,14 @@ export function getElementGridPosition(
     if (atomicNumber && atomicNumber >= 3 && atomicNumber <= 10) {
       // Period 2 elements
       const positions = [
-        { col: 1, row: 2 }, // Li
-        { col: 2, row: 2 }, // Be
-        { col: 13, row: 2 }, // B
-        { col: 14, row: 2 }, // C
-        { col: 15, row: 2 }, // N
-        { col: 16, row: 2 }, // O
-        { col: 17, row: 2 }, // F
-        { col: 18, row: 2 }, // Ne
+        { gridColumn: 1, gridRow: 2 }, // Li
+        { gridColumn: 2, gridRow: 2 }, // Be
+        { gridColumn: 13, gridRow: 2 }, // B
+        { gridColumn: 14, gridRow: 2 }, // C
+        { gridColumn: 15, gridRow: 2 }, // N
+        { gridColumn: 16, gridRow: 2 }, // O
+        { gridColumn: 17, gridRow: 2 }, // F
+        { gridColumn: 18, gridRow: 2 }, // Ne
       ];
       const index = atomicNumber - 3;
       return positions[index] || { gridColumn: group, gridRow: period };
@@ -160,14 +160,14 @@ export function getElementGridPosition(
     if (atomicNumber && atomicNumber >= 11 && atomicNumber <= 18) {
       // Period 3 elements
       const positions = [
-        { col: 1, row: 3 }, // Na
-        { col: 2, row: 3 }, // Mg
-        { col: 13, row: 3 }, // Al
-        { col: 14, row: 3 }, // Si
-        { col: 15, row: 3 }, // P
-        { col: 16, row: 3 }, // S
-        { col: 17, row: 3 }, // Cl
-        { col: 18, row: 3 }, // Ar
+        { gridColumn: 1, gridRow: 3 }, // Na
+        { gridColumn: 2, gridRow: 3 }, // Mg
+        { gridColumn: 13, gridRow: 3 }, // Al
+        { gridColumn: 14, gridRow: 3 }, // Si
+        { gridColumn: 15, gridRow: 3 }, // P
+        { gridColumn: 16, gridRow: 3 }, // S
+        { gridColumn: 17, gridRow: 3 }, // Cl
+        { gridColumn: 18, gridRow: 3 }, // Ar
       ];
       const index = atomicNumber - 11;
       return positions[index] || { gridColumn: group, gridRow: period };
